@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .product {
+        border: 2px solid gray;
+        padding: 10px;
+        margin: 10px;
+        box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <input type="range" id="price" min="50" max="500" />
+    <label for="price">Price: <span id="selected_price">500</span></label>
+    <div id="products"></div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // ARRAY filter()
+      const numbers = [100, 200, 300, 400];
+      // NEWARRAY = ARRAY.filter( TEST_FUNCTION );
+      const filtered = numbers.filter(function(number) {
+        return number < 250;
+      });
+      console.log("filtered:", filtered);
+
+      // All App logic in here:
+      function initApp(products) {
+        console.log(products);
+        const productsEl = document.querySelector("#products");
+        const priceSlider = document.querySelector("#price");
+        const selPrice = document.querySelector("#selected_price");
+
+        products.map(function(product) {
+          productsEl.innerHTML += `
+						<div class="product">
+							<p>T-Shirt: ${product.name}</p>
+							<p>Color: ${product.color}</p>
+							<p>Price &euro;: ${product.price}</p>
+						</div>
+					`;
+        });
+
+        // To update value, use the 'input' event on the slider:
+        priceSlider.addEventListener("change", function() {
+          console.log("Changed?", priceSlider.value);
+          selPrice.innerText = priceSlider.value;
+          const filtered = products.filter(function(product) {
+            return product.price < priceSlider.value;
+          });
+					console.log(filtered);
+					productsEl.innerHTML = ""; // Empty the container first
+          filtered.map(function(product) {
+            productsEl.innerHTML += `
+							<div class="product">
+								<p>T-Shirt: ${product.name}</p>
+								<p>Color: ${product.color}</p>
+								<p>Price &euro;: ${product.price}</p>
+							</div>
+						`;
+          });
+        });
+        /*
+				for ( let i = 0; i < products.length; i++ ){
+					// document.body.innerHTML += "<p>" + products[i].name + "</p>";
+					document.body.innerHTML += `
+						<div class="product">
+							<p>T-Shirt: ${products[i].name}</p>
+							<p>Color: ${products[i].color}</p>
+							<p>Price &euro;: ${products[i].price}</p>
+						</div>
+					`;
+				}
+				*/
+      }
+
+      fetch("https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9")
+        .then(function(response) {
+          return response.json();
+        })
+        .then(initApp)
+        .catch(function(error) {
+          console.log("Error:", error.message);
+        });
+    </script>
+  </body>
+</html>

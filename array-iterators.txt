@@ -1,0 +1,23 @@
+  const list = [ "A", "B", "C" ];
+
+// USING for .... loop
+
+  for ( let i = 0; i < list.length; i++ ){
+    document.body.innerHTML += "<p>" + list[i] + "</p>";
+  }
+
+// USING NEWARRAY = ARRAY.map( FUNCTION );	(DOES NOT MUTATE ORIGINAL ARRAY) 
+// map will go through all ARRAY elements 
+// and execute FUNCTION on each one
+list.map(function( value ){
+  console.log( value );
+  document.body.innerHTML += "<p>" + value + "</p>";
+});
+
+// ARRAY filter() (DOES NOT MUTATE ORIGINAL ARRAY)
+const numbers = [ 100, 200, 300, 400 ];
+// NEWARRAY = ARRAY.filter( TEST_FUNCTION );
+const filtered = numbers.filter(function( number ){
+  return ( number < 250 );				
+});
+console.log( "filtered:", filtered );

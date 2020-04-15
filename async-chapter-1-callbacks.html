@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<button>Click me!</button>
+	<div id="end"></div>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+	<script>
+		const button = document.querySelector("button");
+		// $.ajax(); // Ajax requests -> via jQuery
+		// fetch(); // Ajax requests -> via JavaScript
+		console.log(1);
+		console.log(2);
+
+		// ASYNC #1 CALLBACKS [ setTimeout, setInterval : ALWAYS Async ]
+		setTimeout( function(){
+			console.log('5" passed...');
+			console.log(123);
+		}, 5000 ); // <-- Let's make this Asynchronous
+
+		// addEventListener: ALWAYS Async 
+		button.addEventListener("click", function(){
+			console.log("Clicked");
+		}); // <!-- Async
+
+		// Async also!
+		$.ajax({
+		  // async: false, // NEVER MAKE SYNC AN AJAX CALL
+			url: "https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9",
+			success: function( data ){
+				console.log("Ajax finished!", data );
+			}
+		});
+
+		// Simple hack to make some code async:
+		setTimeout(function(){
+			console.log("Please make me async!");
+		}, 0 );
+
+		console.log(3);
+		document.querySelector("#end").innerHTML = "<h1>END OF CODE</h1>";
+	</script>
+</body>
+</html>

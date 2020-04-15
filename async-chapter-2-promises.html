@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>Click me!</button>
+    <div id="end"></div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const button = document.querySelector("button");
+      console.log(1);
+      console.log(2);
+
+      function handleSuccess(data) {
+        console.log("A1");
+        setTimeout(function() {
+          console.log("Ajax finished!", data);
+          $.ajax({
+            url: "https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9",
+            success: function() {
+              console.log("2nd ajax call finished...");
+            }
+          });
+        }, 2000);
+        console.log("A2");
+      }
+
+      // Async also!
+      $.ajax({
+        // async: false, // NEVER MAKE SYNC AN AJAX CALL
+        url: "https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9",
+        success: handleSuccess
+      });
+
+      // ASYNC CHAPTER 2 - Promises:
+      Promise.resolve("Some data")
+        .then(function(data) {
+          console.log("then()", data);
+        })
+        .catch(function(err) {});
+
+      let retries = 1;
+      fetch("https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9")
+        .then(function(response) {
+          console.log("Response:", response);
+
+					// Response object: Response Headers + Body (main content)
+					
+					// Gives us the Response body as text (TEXT)
+          // response.text().then(function(txt) {
+          //   console.log( typeof txt, txt );
+					// }); 
+
+					// JSON
+					return response.json();  // Gives us the Response body as json
+
+				})
+				.then(function( products ){
+
+					console.log( products ); // THIS IS WHERE OUR APP BEGINS TO DO EVERYTHING...
+
+				})
+        .catch(function(error) {
+					console.log("Error:", error.message);
+				// if ( retries > 0 ){
+				//// Basic logic. Needs more work to be functional...
+				// 	retries -= 1;
+				// 	fetch("https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9")
+				// 	.then(function(response){
+				// 		console.log("Second try:", response);
+				// 	});
+				// }
+					
+        });
+
+      console.log(3);
+      document.querySelector("#end").innerHTML = "<h1>END OF CODE</h1>";
+    </script>
+  </body>
+</html>

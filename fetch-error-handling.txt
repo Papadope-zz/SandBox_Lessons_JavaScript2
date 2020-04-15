@@ -1,0 +1,40 @@
+
+// HTTP STATUS 401 UNAUTHORIZED REQUEST
+fetch("https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9")
+.then(function(res){
+
+  console.log(res);
+
+}).catch(function(err){
+
+  console.log("ERROR!", err );
+
+});
+
+// HTTP STATUS CODES: https://httpstatuses.com/
+
+// Promises: Chaining & global error handing via one single catch()
+fetch("https://api.jsonbin.io/b/5e9458f8b08d064dc0260be9")
+.then( function(response){ 
+
+    // then() automatically converts the return value into a Promise
+    return "WHAT?"; // -> Promise.resolve("WHAT?");
+
+})
+.then(function(data){
+
+    console.log( data );
+    return "Yet another value converted to Promise!";
+
+})
+.then(function(data){
+
+    console.log( data2 );
+    console.log("Last then()");
+
+})
+.catch( function(error){
+
+    console.log("Error:", error.message);
+
+});
